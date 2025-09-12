@@ -7,7 +7,7 @@ This repository only contains required information, input data and sample script
 We forked the openmm-ml and the mace github repositories and made some adjustments. You need both packages to get the entire set-up running.
 You will need:
 
-https://github.com/cbc-univie/openmm-ml
+https://github.com/cbc-univie/openmm-ml and 
 https://github.com/cbc-univie/mace
 
 ## How to install this:
