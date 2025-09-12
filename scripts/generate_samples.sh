@@ -17,7 +17,7 @@ script_path="${base_dir}/../scripts/sample_states.py"
 # Input PDB file
 ############ for production runs
 pdb_file="../../input/${system_name}_waterbox_equil.pdb"
-output_dir="${base_dir}/${system_name}/prod_${model_size}_${shifting_style}_${default_dtype}_run${run}/trajs/"
+output_dir="${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/trajs/"
 lamb_values=( 0.0 0.05263158 0.10526316 0.15789474 0.21052632
        0.26315789 0.31578947 0.36842105 0.42105263 0.47368421 
        0.57894737 0.68421053
@@ -39,14 +39,13 @@ timestep=$timestep ps
 EOF
 
 
-
+cd "$output_dir" || exit
 
 
 
 # SLURM submission script generation
 for lamb in "${lamb_values[@]}"; do
     # Change to the output directory
-    cd "$output_dir" || exit
 
     # SLURM job script name
     job_script="job_r${lamb}_${shifting_style}.slurm"
