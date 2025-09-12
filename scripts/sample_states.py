@@ -24,11 +24,27 @@ parser.add_argument(
 parser.add_argument(
     "--pdb", type=str, required=True, help="Path to the input PDB file."
 )
+parser.add_argument(
+    "--model_size", type=str, required=True, help="Model size of mace model (small/medium/large)."
+)
+parser.add_argument(
+    "--shifting", type=str, required=True, help="Shifting style."
+)
+parser.add_argument(
+    "--default_dtype", type=str, required=True, help="Single or double precision for energies."
+)
+parser.add_argument(
+    "--timestep", type=float, required=True, help="Integration timestep."
+)
 args = parser.parse_args()
 
 # Command-line inputs
 lamb = args.lamb
 pdb_file = args.pdb
+shifting_style = args.shifting
+model_size = args.model_size
+default_dtype = args.default_dtype
+timestep = args.timestep * unit.picoseconds #0.0005
 
 # File names
 trajectory_filename = f"trajectory_lambda_{lamb:.4f}_{tag}.dcd"
@@ -66,7 +82,6 @@ if not torch.any(atom_groups == 1):
 temperature = 300 * unit.kelvin
 pressure = 1.0 * unit.atmosphere
 friction = 1.0 / unit.picoseconds
-timestep = 0.001 * unit.picoseconds
 simulation_time = 1.0 * unit.nanoseconds
 save_interval = 0.25 * unit.picoseconds
 
@@ -76,10 +91,12 @@ platform = Platform.getPlatformByName("CUDA")
 # Create the MLPotential
 print(f"Running simulation for lambda = {lamb}...")
 potential = MLPotential(
-    "mace",
-    # modelPath="alchemical_mace_small_v0.pt",
+    "mace-alch",
     atom_groups=atom_groups,
     lamb=lamb,
+    shifting_style=shifting_style,
+    size=model_size,
+    default_dtype=default_dtype
 )
 
 # Create the OpenMM system
