@@ -46,12 +46,12 @@ mamba install -c conda-forge nnpops
 
 ## Sample data
 
-The data folder contains pdb files for all small solute boxes we used for our [paper](https://chemrxiv.org/engage/chemrxiv/article-details/6812638f50018ac7c5da3dd1).
-The script folder contains both the sampling scripts (submit and python script) and the analysis script
+The data folder contains pdb files for all small solute boxes we used for the [paper](https://chemrxiv.org/engage/chemrxiv/article-details/6812638f50018ac7c5da3dd1).
+The script folder contains both the sampling scripts (submit and python script) and the analysis scripts (sibmit and python scripts.)
+The submit script writes and runs submit scripts for all lambda states. If you want to run a single job for one lambda state, you can run (e.g. for ethane):
 
-und einen sample Job per Hand aufrufen:
 ```
-python sample_states.py --lamb "0.0" --pdb ../data/ethane_waterbox/input/ethane_waterbox.pdb
+python sample_states.py --lamb "0.0" --pdb ../data/ethane_waterbox/input/ethane_waterbox_equil.pdb
 ```
 
 
