@@ -48,7 +48,7 @@ mamba install -c conda-forge nnpops
 
 The data folder contains pdb files for all small solute boxes we used for the [paper](https://chemrxiv.org/engage/chemrxiv/article-details/6812638f50018ac7c5da3dd1).
 The script folder contains both the sampling scripts (submit and python script) and the analysis scripts (sibmit and python scripts.)
-The submit script writes and runs submit scripts for all lambda states. Execute:
+The submit script writes and runs submit scripts for all lambda states. To run this, go to the scripts folder and execute:
 
 ```
 sbatch generate_samples.sh
