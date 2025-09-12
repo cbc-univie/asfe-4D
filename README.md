@@ -17,8 +17,8 @@ git clone git@github.com:cbc-univie/asfe-4D.git
 git clone git@github.com:cbc-univie/openmm-ml.git
 git clone git@github.com:cbc-univie/mace.git
 
-mamba create -n 4D python=3.12
-mamba activate 4D
+mamba create -n alchemical_nnp python=3.12
+mamba activate alchemical_nnp
 mamba install pytorch=2.5.1 pytorch-gpu openmm-torch cudatoolkit nnpops -c conda-forge
 
 cd openmm-ml/
