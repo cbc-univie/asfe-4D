@@ -12,7 +12,7 @@ run=1
 timestep=0.001
 
 # Script path
-script_path="${base_dir}/../scripts/sample_states.py"
+script_path="../../../../scripts/sample_states.py"
 
 # Input PDB file
 ############ for production runs
