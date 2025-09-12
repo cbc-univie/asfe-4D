@@ -14,6 +14,23 @@ https://github.com/cbc-univie/mace
 ```
 git clone git@github.com:cbc-univie/asfe-4D.git
 git clone git@github.com:cbc-univie/openmm-ml.git
+git clone git@github.com:cbc-univie/mace.git
+
+mamba create -n 4D python=3.12
+mamba activate 4D
+mamba install pytorch=2.5.1 pytorch-gpu openmm-torch cudatoolkit nnpops -c conda-forge
+
+cd openmm-ml/
+pip install .
+cd ../mace/
+pip install .
+```
+
+
+old:
+```
+git clone git@github.com:cbc-univie/asfe-4D.git
+git clone git@github.com:cbc-univie/openmm-ml.git
 cd openmm-ml/
 pip install .
 mamba install -c conda-forge pytorch 
@@ -29,3 +46,9 @@ und einen sample Job per Hand aufrufen:
 ```
 python sample_states.py --lamb "0.0" --pdb ../data/ethane_waterbox/input/ethane_waterbox.pdb
 ```
+
+
+
+Pre-print:
+
+https://chemrxiv.org/engage/chemrxiv/article-details/6812638f50018ac7c5da3dd1
