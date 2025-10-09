@@ -4,12 +4,13 @@
 base_dir="../data"
 
 # System name
-system_name="methanol"
-model_size='small'
-default_dtype='float64'
+system_name="ethane"
+model_size='small' #medium
+default_dtype='float32' #float64
 shifting_style="linear_to_cutoff" #('4D' '4D_to_cutoff' 'linear' 'linear_to_cutoff')
 run=1
 timestep=0.001
+tag="v1"
 
 # Script path
 script_path="../../../../scripts/sample_states.py"
@@ -38,42 +39,29 @@ pdb=$pdb_file
 timestep=$timestep ps
 EOF
 
-
 cd "$output_dir" || exit
-
-
 
 # SLURM submission script generation
 for lamb in "${lamb_values[@]}"; do
     # Change to the output directory
 
     # SLURM job script name
-    job_script="job_r${lamb}_${shifting_style}.slurm"
+    job_script="job_r${lamb}_${shifting_style}_${tag}.slurm"
 
     # Create SLURM job script
     cat <<EOF > $job_script
 #!/bin/bash
-#SBATCH --job-name=r${lamb}_${system_name}_${shifting_style}   # Job name
-#SBATCH --output=r${lamb}.log                # Output log file
-#SBATCH --error=r${lamb}.err                 # Error log file
-#SBATCH -p 4090
-##SBATCH -p ADA
-##SBATCH -p gpu
-
-
-## SBATCH --partition=long                     # GPU partition name
-## SBATCH --gres=gpu:1                         # Request 1 GPU
-## SBATCH --cpus-per-task=2                    # Number of CPU cores per task
-## SBATCH --mem=32G                            # Memory per node
-## SBATCH --nice=100                           # Number of tasks
-## SBATCH --ntasks=1                           # Number of tasks
+#SBATCH --job-name=r${lamb}_${system_name}_${shifting_style}_${tag}   # Job name
+#SBATCH --output=r${lamb}_${tag}.log                # Output log file
+#SBATCH --error=r${lamb}_${tag}.err                 # Error log file
+#SBATCH --p 4090
 
 # Load any required modules
 source ~/miniconda3/etc/profile.d/conda.sh
-conda activate 4D_all_shift
+conda activate alchemical_nnp
 
 # Execute the script
-python $script_path --lamb $lamb --pdb $pdb_file --shifting $shifting_style --model_size $model_size --default_dtype $default_dtype --timestep $timestep
+python $script_path --lamb $lamb --pdb $pdb_file --shifting $shifting_style --model_size $model_size --default_dtype $default_dtype --timestep $timestep --tag $tag
 EOF
 
     # Submit the job to SLURM
