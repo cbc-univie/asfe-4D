@@ -188,6 +188,11 @@ def calculate_free_energies(
         Array of lambda values used for the alchemical transformation.
     method : str
         Method for free energy calculation: 'bar', 'mbar', or 'mbar_filtered'.
+        If MBAR does not converge (see pre-print), you can apply the filtered MBAR approach (mbar_filtered method). 
+        This method filters out off-diagonal high-weight samples before rerunning MBAR. 
+        You can specify the lambda range where high weights should be identified (typically near lambda=0).
+        A starting index for the sample can also be set 
+        (use an index larger than the number of samples used for lambda states close to 0 to avoid filtering valid samples).
     start_index : int or None
         Starting frame index for filtering in 'mbar_filtered' method.
     lambda_range : tuple(int, int) or None

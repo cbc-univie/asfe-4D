@@ -52,12 +52,9 @@ Before running the analysis, make sure the required dependencies are installed:
 mamba install -c conda-forge pymbar mdtraj seaborn tqdm
 ```
 
-The free energy calculation can be performed using either the pairwise BAR or MBAR method. 
-If MBAR does not converge (see pre-print), you can apply the filtered MBAR approach (mbar_filtered method). This method filters out off-diagonal high-weight samples before rerunning MBAR. 
-You can specify the lambda range where high weights should be identified (typically near lambda=0).
-A starting index for the sample can also be set (use an index larger than the number of samples used for lambda states close to 0 to avoid filtering valid samples).
+The free energy calculation can be performed using either the pairwise BAR or MBAR method (if MBAR does not converge, you can apply the mbar_filtered method, see pre-print and `calculate_asfe.py` for more details)
 Free energy calculations can be performed using the provided `run_analysis.sh` script. 
-make sure to set the correct `base` directory path inside the script.
+Make sure to set the correct `base` directory path inside the script.
 
 Example usage:
 
