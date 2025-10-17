@@ -52,7 +52,7 @@ Before running the analysis, make sure the required dependencies are installed:
 mamba install -c conda-forge pymbar mdtraj seaborn tqdm
 ```
 
-The free energy calculation can be performed using either the pairwise BAR or MBAR method (if MBAR does not converge, you can apply the mbar_filtered method, see pre-print and `calculate_asfe.py` for more details)
+The free energy calculation can be performed using either the pairwise BAR or MBAR method (in this application, MBAR can sometimes produce incorrect results and/or fail to converge; in such cases you can apply the mbar_filtered method, see pre-print and `calculate_asfe.py` for more details)
 Free energy calculations can be performed using the provided `run_analysis.sh` script. 
 Make sure to set the correct `base` directory path inside the script.
 
