@@ -8,8 +8,6 @@ import torch
 import warnings
 warnings.filterwarnings("ignore")
 
-tag = "v4_1"
-
 # Print the hostname of the node
 hostname = socket.gethostname()
 print(f"Running on node: {hostname}")
@@ -36,6 +34,9 @@ parser.add_argument(
 parser.add_argument(
     "--timestep", type=float, required=True, help="Integration timestep."
 )
+parser.add_argument(
+    "--tag", type=str, required=True, help="version tag for the simulation."
+)
 args = parser.parse_args()
 
 # Command-line inputs
@@ -45,6 +46,7 @@ shifting_style = args.shifting
 model_size = args.model_size
 default_dtype = args.default_dtype
 timestep = args.timestep * unit.picoseconds #0.0005
+tag = args.tag
 
 # File names
 trajectory_filename = f"trajectory_lambda_{lamb:.4f}_{tag}.dcd"
