@@ -2,13 +2,13 @@
 #SBATCH --job-name=methanol_analysis 
 #SBATCH --output=methanol_analysis.log
 #SBATCH --error=methanol_analysis.err
-#SBATCH --p 4090
+#SBATCH -p 4090
 
 # Load Conda ########################################
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate alchemical_nnp
 
-base='asfe-4D/'
+base_dir='asfe-4D/data'
 
 ###########################
 # Parse labeled arguments #
@@ -60,11 +60,11 @@ fi
 touch "$lock_file"
 trap "rm -f $lock_file" EXIT
 
-mkdir -p ${base}/data/${system_name}/analysis_${version}
-cd ${base}/data/${system_name}/analysis_${version}
+mkdir -p ${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/analysis_${version}
+cd ${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/analysis_${version}
 
-input_dir="${base}/data/${system_name}/input"
-traj_dir="${base}/data/${system_name}/trajs"
+input_dir="${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/input"
+traj_dir="${base_dir}/${system_name}//${shifting_style}_${default_dtype}_run${run}/trajs"
 pdb_file="${input_dir}/${system_name}_waterbox_equil.pdb"
 trajectory_template="${traj_dir}/trajectory_lambda_{:.4f}_${version}.dcd"
 lamb_values=( 0.0 0.05263158 0.10526316 0.15789474 0.21052632
@@ -74,7 +74,7 @@ lamb_values=( 0.0 0.05263158 0.10526316 0.15789474 0.21052632
 
 temperature=300
 
-script_path="${base}/scripts/calculate_asfe.py"
+script_path="${base_dir}/scripts/calculate_asfe.py"
 
 ###########################
 # Build Python command
@@ -91,7 +91,7 @@ cmd=(python "$script_path"
     --default_dtype "float32"
 )
 
-cd ${base}/data/${system_name}/analysis_${version}
+cd ${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/analysis_${version}
 
 if [[ "$method" == "mbar_filtered" ]]; then
     cmd+=(--start_index "$start_index" --lambda_range "$lambda_range_start" "$lambda_range_end")
