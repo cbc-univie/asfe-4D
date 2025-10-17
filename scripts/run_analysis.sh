@@ -8,7 +8,9 @@
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate alchemical_nnp
 
-base_dir='asfe-4D/data'
+base_dir='asfe-4D'
+shifting_style="linear_to_cutoff"
+default_dtype="float32"
 
 ###########################
 # Parse labeled arguments #
@@ -60,11 +62,11 @@ fi
 touch "$lock_file"
 trap "rm -f $lock_file" EXIT
 
-mkdir -p ${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/analysis_${version}
-cd ${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/analysis_${version}
+mkdir -p ${base_dir}/data/${system_name}/${shifting_style}_${default_dtype}_run${version}/analysis_${version}
+cd ${base_dir}/data/${system_name}/${shifting_style}_${default_dtype}_run${version}/analysis_${version}
 
-input_dir="${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/input"
-traj_dir="${base_dir}/${system_name}//${shifting_style}_${default_dtype}_run${run}/trajs"
+input_dir="${base_dir}/data/${system_name}/${shifting_style}_${default_dtype}_run${version}/input"
+traj_dir="${base_dir}/data/${system_name}//${shifting_style}_${default_dtype}_run${version}/trajs"
 pdb_file="${input_dir}/${system_name}_waterbox_equil.pdb"
 trajectory_template="${traj_dir}/trajectory_lambda_{:.4f}_${version}.dcd"
 lamb_values=( 0.0 0.05263158 0.10526316 0.15789474 0.21052632
@@ -87,11 +89,9 @@ cmd=(python "$script_path"
     --every_nth_frame 4
     --method "$method"
     --size "small"
-    --shifting_style "linear_to_cutoff"
-    --default_dtype "float32"
+    --shifting_style "$shifting_style"
+    --default_dtype "$default_dtype"
 )
-
-cd ${base_dir}/${system_name}/${shifting_style}_${default_dtype}_run${run}/analysis_${version}
 
 if [[ "$method" == "mbar_filtered" ]]; then
     cmd+=(--start_index "$start_index" --lambda_range "$lambda_range_start" "$lambda_range_end")
