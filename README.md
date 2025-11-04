@@ -34,7 +34,7 @@ The script folder contains both the sampling scripts (slurm submit and python sc
 The submit script writes and runs submit scripts for all lambda states. To run this, go to the asfe-4D/scripts/ folder and execute:
 
 ```
-sbatch generate_samples.sh
+bash generate_samples.sh
 ```
 
 If you want to run a single job for one lambda state, you can run (e.g. for ethane):
